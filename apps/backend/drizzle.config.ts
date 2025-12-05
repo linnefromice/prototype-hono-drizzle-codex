@@ -1,13 +1,22 @@
 import { defineConfig } from 'drizzle-kit'
-import { loadEnvConfig } from './src/utils/env'
+import { config } from 'dotenv'
 
-const env = loadEnvConfig()
+// Load .env file if it exists (for local development)
+config()
+
+// Only include dbCredentials if DATABASE_URL is set
+// When using CLI flags (--url), this will be undefined
+const dbConfig = process.env.DATABASE_URL
+  ? {
+      dbCredentials: {
+        connectionString: process.env.DATABASE_URL,
+      },
+    }
+  : {}
 
 export default defineConfig({
   schema: './src/infrastructure/db/schema.ts',
   out: './drizzle',
-  driver: 'pg',
-  dbCredentials: {
-    connectionString: env.DATABASE_URL,
-  },
+  dialect: 'postgresql',
+  ...dbConfig,
 })
