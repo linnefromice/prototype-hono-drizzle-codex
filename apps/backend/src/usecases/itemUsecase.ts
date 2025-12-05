@@ -1,4 +1,4 @@
-import type { ItemRepository } from '../repositories/itemRepository'
+import type { ItemRepository } from '../repositories/itemRepository.js'
 
 export class ItemUsecase {
   constructor(private readonly repo: ItemRepository) {}

@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.7.4",
+    "@types/pg": "^8.11.11",
     "drizzle-kit": "^0.26.1",
     "@vitest/ui": "^2.0.5",
     "tsx": "^4.19.2",

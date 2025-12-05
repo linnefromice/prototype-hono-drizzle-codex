@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
-import healthRouter from './routes/health'
-import itemsRouter from './routes/items'
+import healthRouter from './routes/health.js'
+import itemsRouter from './routes/items.js'
 
 const app = new Hono()
 

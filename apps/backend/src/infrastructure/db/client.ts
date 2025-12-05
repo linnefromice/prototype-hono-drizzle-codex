@@ -1,6 +1,6 @@
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'
-import { loadEnvConfig } from '../../utils/env'
+import { loadEnvConfig } from '../../utils/env.js'
 
 const env = loadEnvConfig()
 

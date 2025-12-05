@@ -1,7 +1,7 @@
 import type { Item } from '@openapi'
-import { db } from '../infrastructure/db/client'
-import { items } from '../infrastructure/db/schema'
-import type { ItemRepository } from './itemRepository'
+import { db } from '../infrastructure/db/client.js'
+import { items } from '../infrastructure/db/schema.js'
+import type { ItemRepository } from './itemRepository.js'
 
 export class DrizzleItemRepository implements ItemRepository {
   constructor(private readonly client = db) {}

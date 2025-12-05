@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { MockItemRepository } from '../repositories/__mocks__/itemRepository.mock'
-import { ItemUsecase } from './itemUsecase'
+import { MockItemRepository } from '../repositories/__mocks__/itemRepository.mock.js'
+import { ItemUsecase } from './itemUsecase.js'
 
 describe('ItemUsecase', () => {
   it('creates an item successfully', async () => {

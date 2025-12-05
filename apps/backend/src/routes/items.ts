@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { CreateItemRequestSchema } from '@openapi'
-import { DrizzleItemRepository } from '../repositories/drizzleItemRepository'
-import { ItemUsecase } from '../usecases/itemUsecase'
+import { DrizzleItemRepository } from '../repositories/drizzleItemRepository.js'
+import { ItemUsecase } from '../usecases/itemUsecase.js'
 
 const router = new Hono()
 const itemUsecase = new ItemUsecase(new DrizzleItemRepository())
