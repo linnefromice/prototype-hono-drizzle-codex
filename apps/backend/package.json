@@ -17,7 +17,7 @@
     "tsconfig-paths": "^4.2.0",
     "pg": "^8.12.0",
     "zod": "^3.23.8",
-    "openapi": "workspace:*"
+    "openapi": "file:../../packages/openapi"
   },
   "devDependencies": {
     "@types/node": "^22.7.4",

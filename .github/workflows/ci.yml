@@ -33,8 +33,10 @@ jobs:
         with:
           node-version: 20
 
-      - name: Upgrade npm
-        run: npm install -g npm@10
+      - name: Upgrade npm to version 10
+        run: |
+          npm install -g npm@10
+          npm --version
 
       - name: Install dependencies
         run: npm install
