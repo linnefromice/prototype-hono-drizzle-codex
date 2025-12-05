@@ -6,7 +6,7 @@ const env = loadEnvConfig()
 export default defineConfig({
   schema: './src/infrastructure/db/schema.ts',
   out: './drizzle',
-  driver: 'pg',
+  dialect: 'postgresql',
   dbCredentials: {
     connectionString: env.DATABASE_URL,
   },
