@@ -115,7 +115,7 @@ class FakeChatRepository implements ChatRepository {
       conversationId,
       senderUserId: payload.senderUserId ?? null,
       type: payload.type,
-      text: payload.text,
+      text: payload.text ?? null,
       replyToMessageId: payload.replyToMessageId,
       systemEvent: payload.systemEvent,
       createdAt: new Date().toISOString(),
