@@ -302,11 +302,14 @@ describe('ChatUsecase', () => {
   })
 
   it('requires bookmarked messages to exist and belong to active users', async () => {
-    await expect(usecase.addBookmark(uuid(777), { userId: ACTIVE_USER })).rejects.toThrow(
+    const conversation = await repo.getConversation(CONVERSATION_ID)
+    const activeUserId = conversation?.participants[0]?.userId ?? ACTIVE_USER
+
+    await expect(usecase.addBookmark(uuid(777), { userId: activeUserId })).rejects.toThrow(
       new HttpError(404, 'Message not found'),
     )
 
     const message = await repo.createMessage(CONVERSATION_ID, { senderUserId: ACTIVE_USER, text: 'Hello', type: 'text' })
-    await expect(usecase.removeBookmark(message.id, ACTIVE_USER)).rejects.toThrow(new HttpError(404, 'Bookmark not found'))
+    await expect(usecase.removeBookmark(message.id, activeUserId)).rejects.toThrow(new HttpError(404, 'Bookmark not found'))
   })
 })
