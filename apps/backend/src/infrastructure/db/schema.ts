@@ -74,7 +74,6 @@ export const messages = pgTable(
       columns: [table.replyToMessageId],
       foreignColumns: [table.id],
       name: 'messages_reply_to_message_id_fkey',
-      onDelete: 'set null',
     }),
   }),
 )

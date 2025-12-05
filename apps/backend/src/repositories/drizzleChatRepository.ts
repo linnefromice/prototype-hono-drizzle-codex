@@ -204,19 +204,15 @@ export class DrizzleChatRepository implements ChatRepository {
   }
 
   async addReaction(messageId: string, data: ReactionRequest): Promise<Reaction> {
-    const insertResult = await this.client
+    const [reactionRow] = await this.client
       .insert(reactions)
       .values({
         messageId,
         userId: data.userId,
         emoji: data.emoji,
       })
-      .onConflictDoNothing()
+      .onConflictDoNothing({ target: [reactions.messageId, reactions.userId, reactions.emoji] })
       .returning()
-
-    const reactionRow: typeof reactions.$inferSelect | undefined = Array.isArray(insertResult)
-      ? insertResult[0]
-      : insertResult?.rows?.[0]
 
     if (reactionRow) {
       return mapReaction(reactionRow)
