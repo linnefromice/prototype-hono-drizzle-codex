@@ -258,7 +258,9 @@ describe('ChatUsecase', () => {
   })
 
   it('requires senderUserId when sending messages', async () => {
-    await expect(usecase.sendMessage(CONVERSATION_ID, { text: 'Hello', senderUserId: undefined })).rejects.toThrow(
+    const missingSenderPayload = { text: 'Hello' } as unknown as Parameters<typeof usecase.sendMessage>[1]
+
+    await expect(usecase.sendMessage(CONVERSATION_ID, missingSenderPayload)).rejects.toThrow(
       new HttpError(400, 'senderUserId is required for messages'),
     )
   })
