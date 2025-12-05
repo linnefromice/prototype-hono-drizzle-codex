@@ -51,7 +51,9 @@ jobs:
         working-directory: apps/backend
 
       - name: Run migrations
-        run: npx drizzle-kit push --url="${{ env.DATABASE_URL }}"
+        run: |
+          export DATABASE_URL="${{ env.DATABASE_URL }}"
+          npx drizzle-kit push --dialect=postgresql --url="${DATABASE_URL}"
         working-directory: apps/backend
 
       - name: Run backend checks
