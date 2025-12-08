@@ -103,23 +103,33 @@ Drizzle Kit reads configuration from `apps/backend/drizzle.config.ts`, which use
 **First time setup** (after starting Docker Compose):
 
 ```bash
+# Navigate to the backend directory
+cd apps/backend
+
 # Generate initial migration files
-npx drizzle-kit generate --config apps/backend/drizzle.config.ts
+npx drizzle-kit generate
 
 # Apply migrations to create tables
-npx drizzle-kit push --config apps/backend/drizzle.config.ts
+npx drizzle-kit push
 ```
 
 **Making schema changes**:
 
 ```bash
 # 1. Update apps/backend/src/infrastructure/db/schema.ts
-# 2. Generate SQL migrations from schema changes
-npx drizzle-kit generate --config apps/backend/drizzle.config.ts
+# 2. Navigate to the backend directory
+cd apps/backend
 
-# 3. Apply migrations to your database
-npx drizzle-kit push --config apps/backend/drizzle.config.ts
+# 3. Generate SQL migrations from schema changes
+npx drizzle-kit generate
+
+# 4. Apply migrations to your database
+npx drizzle-kit push
 ```
+
+**Note**: Drizzle Kit will automatically use the `drizzle.config.ts` file in the current
+directory. You can also run commands from the repository root by specifying the config
+path explicitly with `--config apps/backend/drizzle.config.ts`.
 
 ## Workspace layout
 
