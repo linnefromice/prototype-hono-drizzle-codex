@@ -29,13 +29,23 @@ structure is ready for future frontends or shared packages under `apps/` and
    docker compose ps
    ```
 
-3. Stop the database when not needed:
+3. Access the database UI (Adminer):
+
+   - Open http://localhost:8080 in your browser
+   - Login credentials:
+     - System: `PostgreSQL`
+     - Server: `postgres`
+     - Username: `postgres`
+     - Password: `password`
+     - Database: `app_db`
+
+4. Stop the database when not needed:
 
    ```bash
    docker compose down
    ```
 
-4. To remove all data and start fresh:
+5. To remove all data and start fresh:
 
    ```bash
    docker compose down -v
