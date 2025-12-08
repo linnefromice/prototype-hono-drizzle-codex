@@ -329,6 +329,7 @@ export { postUsersBody as CreateUserRequestSchema };
 export type HealthResponse = zod.infer<typeof getHealthResponse>;
 export type Item = zod.infer<typeof getItemsResponseItem>;
 export type User = zod.infer<typeof postUsersBody> & { id: string; createdAt: string };
+export type Participant = zod.infer<typeof deleteConversationsIdParticipantsUserIdResponse>;
 export type ConversationDetail = zod.infer<typeof getConversationsIdResponse>;
 export type Message = zod.infer<typeof getConversationsIdMessagesResponseItem>;
 export type Reaction = zod.infer<typeof deleteMessagesIdReactionsEmojiResponse>;

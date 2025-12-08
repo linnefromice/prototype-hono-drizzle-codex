@@ -9,12 +9,12 @@ import type {
   ConversationRead,
   CreateConversationRequest,
   Message,
+  Participant,
   Reaction,
   ReactionRequest,
   SendMessageRequest,
   UpdateConversationReadRequest,
 } from 'openapi'
-import type { Participant } from 'openapi/dist/schemas/ParticipantSchema'
 import { db } from '../infrastructure/db/client'
 import {
   conversationReads,
