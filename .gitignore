@@ -3,3 +3,5 @@ node_modules
 .env
 apps/backend/drizzle
 apps/backend/dist
+coverage
+apps/backend/coverage
