@@ -54,9 +54,9 @@ export const getConversationsResponseItem = zod
           role: zod.enum(["member", "admin"]),
           joinedAt: zod.string().datetime({}),
           leftAt: zod.string().datetime({}).nullish(),
-        }),
+        })
       ),
-    }),
+    })
   );
 export const getConversationsResponse = zod.array(getConversationsResponseItem);
 
@@ -93,9 +93,9 @@ export const getConversationsIdResponse = zod
           role: zod.enum(["member", "admin"]),
           joinedAt: zod.string().datetime({}),
           leftAt: zod.string().datetime({}).nullish(),
-        }),
+        })
       ),
-    }),
+    })
   );
 
 /**
@@ -157,7 +157,7 @@ export const getConversationsIdMessagesResponseItem = zod.object({
   createdAt: zod.string().datetime({}),
 });
 export const getConversationsIdMessagesResponse = zod.array(
-  getConversationsIdMessagesResponseItem,
+  getConversationsIdMessagesResponseItem
 );
 
 /**
@@ -312,7 +312,7 @@ export const getUsersUserIdBookmarksResponseItem = zod.object({
   messageCreatedAt: zod.string().datetime({}),
 });
 export const getUsersUserIdBookmarksResponse = zod.array(
-  getUsersUserIdBookmarksResponseItem,
+  getUsersUserIdBookmarksResponseItem
 );
 
 // Re-export Zod schemas for request validation
