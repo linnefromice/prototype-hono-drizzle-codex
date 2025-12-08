@@ -275,6 +275,15 @@ export const deleteMessagesIdBookmarksResponse = zod.object({
 });
 
 /**
+ * Creates a new user. Only available in development mode.
+ * @summary Create user (development only)
+ */
+export const postUsersBody = zod.object({
+  name: zod.string().min(1),
+  avatarUrl: zod.string().nullish(),
+});
+
+/**
  * @summary List bookmarks for a user
  */
 export const getUsersUserIdBookmarksParams = zod.object({
@@ -322,6 +331,7 @@ export type { BookmarkRequest } from "./schemas/bookmarkRequest";
 export type { ConversationDetail } from "./schemas/conversationDetail";
 export type { ConversationRead } from "./schemas/conversationRead";
 export type { CreateConversationRequest } from "./schemas/createConversationRequest";
+export type { CreateUserRequest } from "./schemas/createUserRequest";
 export type { HealthResponse } from "./schemas/healthResponse";
 export type { Item } from "./schemas/item";
 export type { Message } from "./schemas/message";
@@ -330,3 +340,13 @@ export type { Reaction } from "./schemas/reaction";
 export type { ReactionRequest } from "./schemas/reactionRequest";
 export type { SendMessageRequest } from "./schemas/sendMessageRequest";
 export type { UpdateConversationReadRequest } from "./schemas/updateConversationReadRequest";
+
+// Re-export Zod schemas for request validation
+export { postItemsBody as CreateItemRequestSchema };
+export { postConversationsBody as CreateConversationRequestSchema };
+export { postConversationsIdParticipantsBody as AddParticipantRequestSchema };
+export { postConversationsIdMessagesBody as SendMessageRequestSchema };
+export { postMessagesIdReactionsBody as ReactionRequestSchema };
+export { postConversationsIdReadBody as UpdateConversationReadRequestSchema };
+export { postMessagesIdBookmarksBody as BookmarkRequestSchema };
+export { postUsersBody as CreateUserRequestSchema };
