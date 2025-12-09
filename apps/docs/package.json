@@ -1,0 +1,26 @@
+{
+  "name": "vitepress-project",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "npm run copy:openapi && npm run generate:api-reference && npm run generate:snapshots && vitepress build docs",
+    "serve": "vitepress serve docs",
+    "copy:openapi": "cp ../../packages/openapi/openapi.yaml ./docs/public/openapi.yaml",
+    "generate:api-reference": "redocly build-docs ../../packages/openapi/openapi.yaml -o ./docs/public/api-reference.html",
+    "generate:snapshots": "tsx scripts/generate-snapshot-docs.ts"
+  },
+  "devDependencies": {
+    "@redocly/cli": "^2.12.5",
+    "tsx": "^4.21.0",
+    "vitepress": "1.0.0-alpha.28",
+    "vue": "3.2.44"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@algolia/client-search"
+      ]
+    }
+  }
+}
