@@ -1,4 +1,4 @@
-import { sqliteTable, text, index, uniqueIndex } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text, index, uniqueIndex, type SQLiteTableWithColumns } from 'drizzle-orm/sqlite-core'
 import { sql } from 'drizzle-orm'
 
 // Enum types as const arrays for type safety
@@ -43,7 +43,7 @@ export const participants = sqliteTable(
   }),
 )
 
-export const messages = sqliteTable(
+export const messages: SQLiteTableWithColumns<any> = sqliteTable(
   'messages',
   {
     id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
@@ -53,7 +53,7 @@ export const messages = sqliteTable(
     senderUserId: text('sender_user_id').references(() => users.id, { onDelete: 'set null' }),
     type: text('type', { enum: messageTypes }).notNull().default('text'),
     text: text('text'),
-    replyToMessageId: text('reply_to_message_id').references(() => messages.id, {
+    replyToMessageId: text('reply_to_message_id').references((): any => messages.id, {
       onDelete: 'set null',
     }),
     systemEvent: text('system_event', { enum: systemEvents }),
