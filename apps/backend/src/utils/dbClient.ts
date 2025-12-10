@@ -15,6 +15,7 @@ export async function getDbClient(c: any): Promise<DbClient> {
     const { createD1Client } = await import('../infrastructure/db/client.d1')
     return createD1Client(c.env.DB)
   }
+
   // In Local environment, use default db import
   const { db } = await import('../infrastructure/db/client')
   return db
