@@ -9,6 +9,7 @@ on:
       - 'apps/backend/src/routes/__snapshots__/**'
       - 'apps/docs/**'
       - '.github/workflows/deploy-docs.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read
