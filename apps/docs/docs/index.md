@@ -10,11 +10,14 @@ hero:
       text: API Reference
       link: /api/
     - theme: alt
+      text: OpenAPI Spec
+      link: /openapi.yaml
+    - theme: alt
       text: Snapshot Tests
       link: /snapshots/
     - theme: alt
       text: GitHub
-      link: https://github.com/linnefromice/prototype-hono-drizzle-codex
+      link: https://github.com/linnefromice/prototype-chat-w-hono-drizzle-by-agent
 
 features:
   - icon: 📚

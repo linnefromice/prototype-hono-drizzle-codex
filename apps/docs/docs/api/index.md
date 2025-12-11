@@ -51,6 +51,44 @@ Manage messages within conversations.
 
 [View full Messages API documentation →](/api/messages)
 
+## OpenAPI Specification
+
+### Download OpenAPI YAML
+
+The complete OpenAPI specification is available in YAML format:
+
+**URL**: [`/openapi.yaml`](/openapi.yaml)
+
+**Direct link**: `https://linnefromice.github.io/prototype-chat-w-hono-drizzle-by-agent/openapi.yaml`
+
+### Using with curl
+
+```bash
+# Download the OpenAPI specification
+curl -O https://linnefromice.github.io/prototype-chat-w-hono-drizzle-by-agent/openapi.yaml
+
+# Or view directly
+curl https://linnefromice.github.io/prototype-chat-w-hono-drizzle-by-agent/openapi.yaml
+```
+
+### Code Generation
+
+You can use this OpenAPI spec to generate client libraries in various languages:
+
+```bash
+# Generate TypeScript client
+npx openapi-generator-cli generate \
+  -i https://linnefromice.github.io/prototype-chat-w-hono-drizzle-by-agent/openapi.yaml \
+  -g typescript-axios \
+  -o ./generated-client
+
+# Generate Swift client for iOS
+npx openapi-generator-cli generate \
+  -i https://linnefromice.github.io/prototype-chat-w-hono-drizzle-by-agent/openapi.yaml \
+  -g swift5 \
+  -o ./ios-client
+```
+
 ## Interactive API Reference
 
 For a complete interactive API reference with request/response schemas and examples, view the full OpenAPI specification:
