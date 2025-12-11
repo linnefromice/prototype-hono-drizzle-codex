@@ -48,6 +48,7 @@ This documentation site provides comprehensive information about the Prototype H
 ## Quick Links
 
 - [API Overview](/api/) - Start exploring the API endpoints
+- [OpenAPI Specification](https://linnefromice.github.io/prototype-chat-w-hono-drizzle-by-agent/openapi.yaml) - Download the raw OpenAPI YAML file
 - [Users API](/api/users) - User management endpoints
 - [Conversations API](/api/conversations) - Conversation management
 - [Messages API](/api/messages) - Message handling

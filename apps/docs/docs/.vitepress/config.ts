@@ -10,7 +10,11 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'API Reference', link: '/api/' },
-      { text: 'OpenAPI Spec', link: '/openapi.yaml' },
+      {
+        text: 'OpenAPI Spec',
+        link: 'https://linnefromice.github.io/prototype-chat-w-hono-drizzle-by-agent/openapi.yaml',
+        target: '_blank'
+      },
       { text: 'Snapshots', link: '/snapshots/' },
       { text: 'Guides', link: '/guides/' },
     ],
