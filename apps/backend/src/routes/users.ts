@@ -16,7 +16,16 @@ const handleError = (error: unknown, c: any) => {
     return c.json({ message: error.message }, error.status)
   }
 
-  throw error
+  if (error instanceof ZodError) {
+    return c.json({ message: error.errors[0].message }, 400)
+  }
+
+  // Log unexpected errors
+  console.error('Unexpected error:', error)
+
+  // Return a generic error response
+  const message = error instanceof Error ? error.message : 'Internal Server Error'
+  return c.json({ message }, 500)
 }
 
 router.get('/', devOnly, async c => {
@@ -43,15 +52,7 @@ router.post('/', devOnly, async c => {
     })
     return c.json(created, 201)
   } catch (error) {
-    if (error instanceof ZodError) {
-      return c.json({ message: error.errors[0].message }, 400)
-    }
-
-    if (error instanceof Error && error.message === 'User name is required') {
-      return c.json({ message: error.message }, 400)
-    }
-
-    throw error
+    return handleError(error, c)
   }
 })
 

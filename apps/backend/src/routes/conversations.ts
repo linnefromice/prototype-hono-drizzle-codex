@@ -22,7 +22,12 @@ const handleError = (error: unknown, c: any) => {
     return c.json({ message: error.errors[0].message }, 400)
   }
 
-  throw error
+  // Log unexpected errors
+  console.error('Unexpected error:', error)
+
+  // Return a generic error response
+  const message = error instanceof Error ? error.message : 'Internal Server Error'
+  return c.json({ message }, 500)
 }
 
 router.get('/', async c => {

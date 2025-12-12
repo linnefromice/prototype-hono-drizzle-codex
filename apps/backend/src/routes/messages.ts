@@ -12,7 +12,12 @@ const handleError = (error: unknown, c: any) => {
     return c.json({ message: error.message }, error.status)
   }
 
-  throw error
+  // Log unexpected errors
+  console.error('Unexpected error:', error)
+
+  // Return a generic error response
+  const message = error instanceof Error ? error.message : 'Internal Server Error'
+  return c.json({ message }, 500)
 }
 
 router.post('/:id/reactions', async c => {
