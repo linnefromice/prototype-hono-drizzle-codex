@@ -13,4 +13,14 @@ INSERT INTO users (id, name, avatar_url, created_at) VALUES
   ('550e8400-e29b-41d4-a716-446655440007', 'Grace', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
   ('550e8400-e29b-41d4-a716-446655440008', 'Heidi', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
   ('550e8400-e29b-41d4-a716-446655440009', 'Ivan', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
-  ('550e8400-e29b-41d4-a716-446655440010', 'Judy', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z');
+  ('550e8400-e29b-41d4-a716-446655440010', 'Judy', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
+  ('550e8400-e29b-41d4-a716-446655440011', 'Kevin', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
+  ('550e8400-e29b-41d4-a716-446655440012', 'Laura', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
+  ('550e8400-e29b-41d4-a716-446655440013', 'Michael', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
+  ('550e8400-e29b-41d4-a716-446655440014', 'Nancy', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
+  ('550e8400-e29b-41d4-a716-446655440015', 'Oscar', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
+  ('550e8400-e29b-41d4-a716-446655440016', 'Peggy', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/113.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
+  ('550e8400-e29b-41d4-a716-446655440017', 'Quinn', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/131.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
+  ('550e8400-e29b-41d4-a716-446655440018', 'Rachel', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/148.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
+  ('550e8400-e29b-41d4-a716-446655440019', 'Steve', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z'),
+  ('550e8400-e29b-41d4-a716-446655440020', 'Tina', 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/196.png', strftime('%Y-%m-%dT%H:%M:%S', 'now') || 'Z');
