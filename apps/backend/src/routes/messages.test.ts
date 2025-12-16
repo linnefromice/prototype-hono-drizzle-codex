@@ -44,11 +44,11 @@ describe('Messages API', () => {
   })
 
   // Helper function to create test users
-  async function createUser(name: string) {
+  async function createUser(name: string, idAlias: string) {
     const response = await app.request('/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({ name, idAlias }),
     })
     return response.json()
   }
@@ -82,8 +82,8 @@ describe('Messages API', () => {
 
   describe('POST /messages/:id/reactions', () => {
     it('adds a reaction to a message', async () => {
-      const user1 = await createUser('User 1')
-      const user2 = await createUser('User 2')
+      const user1 = await createUser('User 1', 'user1')
+      const user2 = await createUser('User 2', 'user2')
 
       // Create conversation and message
       const conversation = await createConversation([user1.id, user2.id])
@@ -116,9 +116,9 @@ describe('Messages API', () => {
     })
 
     it('allows multiple users to react with the same emoji', async () => {
-      const user1 = await createUser('User 1')
-      const user2 = await createUser('User 2')
-      const user3 = await createUser('User 3')
+      const user1 = await createUser('User 1', 'user1')
+      const user2 = await createUser('User 2', 'user2')
+      const user3 = await createUser('User 3', 'user3')
 
       const conversation = await createConversation([user1.id, user2.id, user3.id])
       const message = await sendMessage(conversation.id, user1.id, 'Great news!')
@@ -156,7 +156,7 @@ describe('Messages API', () => {
     })
 
     it('returns 404 for non-existent message', async () => {
-      const user = await createUser('User 1')
+      const user = await createUser('User 1', 'user1')
 
       const response = await app.request('/messages/00000000-0000-0000-0000-000000000000/reactions', {
         method: 'POST',
@@ -176,8 +176,8 @@ describe('Messages API', () => {
 
   describe('DELETE /messages/:id/reactions/:emoji', () => {
     it('removes a reaction from a message', async () => {
-      const user1 = await createUser('User 1')
-      const user2 = await createUser('User 2')
+      const user1 = await createUser('User 1', 'user1')
+      const user2 = await createUser('User 2', 'user2')
 
       const conversation = await createConversation([user1.id, user2.id])
       const message = await sendMessage(conversation.id, user1.id, 'Test message')
@@ -214,8 +214,8 @@ describe('Messages API', () => {
     })
 
     it('returns 400 when userId is not provided', async () => {
-      const user1 = await createUser('User 1')
-      const user2 = await createUser('User 2')
+      const user1 = await createUser('User 1', 'user1')
+      const user2 = await createUser('User 2', 'user2')
 
       const conversation = await createConversation([user1.id, user2.id])
       const message = await sendMessage(conversation.id, user1.id, 'Test')
@@ -242,8 +242,8 @@ describe('Messages API', () => {
     })
 
     it('returns 404 for non-existent reaction', async () => {
-      const user1 = await createUser('User 1')
-      const user2 = await createUser('User 2')
+      const user1 = await createUser('User 1', 'user1')
+      const user2 = await createUser('User 2', 'user2')
 
       const conversation = await createConversation([user1.id, user2.id])
       const message = await sendMessage(conversation.id, user1.id, 'Test')
@@ -262,8 +262,8 @@ describe('Messages API', () => {
 
   describe('POST /messages/:id/bookmarks', () => {
     it('bookmarks a message', async () => {
-      const user1 = await createUser('User 1')
-      const user2 = await createUser('User 2')
+      const user1 = await createUser('User 1', 'user1')
+      const user2 = await createUser('User 2', 'user2')
 
       const conversation = await createConversation([user1.id, user2.id])
       const message = await sendMessage(conversation.id, user1.id, 'Important message')
@@ -294,9 +294,9 @@ describe('Messages API', () => {
     })
 
     it('allows the same message to be bookmarked by different users', async () => {
-      const user1 = await createUser('User 1')
-      const user2 = await createUser('User 2')
-      const user3 = await createUser('User 3')
+      const user1 = await createUser('User 1', 'user1')
+      const user2 = await createUser('User 2', 'user2')
+      const user3 = await createUser('User 3', 'user3')
 
       const conversation = await createConversation([user1.id, user2.id, user3.id])
       const message = await sendMessage(conversation.id, user1.id, 'Shared important info')
@@ -332,7 +332,7 @@ describe('Messages API', () => {
     })
 
     it('returns 404 for non-existent message', async () => {
-      const user = await createUser('User 1')
+      const user = await createUser('User 1', 'user1')
 
       const response = await app.request('/messages/00000000-0000-0000-0000-000000000000/bookmarks', {
         method: 'POST',
@@ -351,8 +351,8 @@ describe('Messages API', () => {
 
   describe('DELETE /messages/:id/bookmarks', () => {
     it('removes a bookmark from a message', async () => {
-      const user1 = await createUser('User 1')
-      const user2 = await createUser('User 2')
+      const user1 = await createUser('User 1', 'user1')
+      const user2 = await createUser('User 2', 'user2')
 
       const conversation = await createConversation([user1.id, user2.id])
       const message = await sendMessage(conversation.id, user1.id, 'Bookmarked message')
@@ -386,8 +386,8 @@ describe('Messages API', () => {
     })
 
     it('returns 400 when userId is not provided', async () => {
-      const user1 = await createUser('User 1')
-      const user2 = await createUser('User 2')
+      const user1 = await createUser('User 1', 'user1')
+      const user2 = await createUser('User 2', 'user2')
 
       const conversation = await createConversation([user1.id, user2.id])
       const message = await sendMessage(conversation.id, user1.id, 'Test')
@@ -400,8 +400,8 @@ describe('Messages API', () => {
     })
 
     it('returns 404 for non-existent bookmark', async () => {
-      const user1 = await createUser('User 1')
-      const user2 = await createUser('User 2')
+      const user1 = await createUser('User 1', 'user1')
+      const user2 = await createUser('User 2', 'user2')
 
       const conversation = await createConversation([user1.id, user2.id])
       const message = await sendMessage(conversation.id, user1.id, 'Test')
@@ -420,8 +420,8 @@ describe('Messages API', () => {
 
   describe('GET /users/:userId/bookmarks', () => {
     it('returns list of bookmarks for a user', async () => {
-      const user1 = await createUser('User 1')
-      const user2 = await createUser('User 2')
+      const user1 = await createUser('User 1', 'user1')
+      const user2 = await createUser('User 2', 'user2')
 
       const conversation = await createConversation([user1.id, user2.id])
       const message1 = await sendMessage(conversation.id, user1.id, 'First bookmark')
@@ -454,7 +454,7 @@ describe('Messages API', () => {
     })
 
     it('returns empty array when user has no bookmarks', async () => {
-      const user = await createUser('User Without Bookmarks')
+      const user = await createUser('User Without Bookmarks', 'user-without-bookmarks')
 
       const response = await app.request(`/users/${user.id}/bookmarks`)
 

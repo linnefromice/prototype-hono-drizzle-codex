@@ -33,6 +33,7 @@ describe('Users API', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          idAlias: 'test-user-list',
           name: 'Test User for List',
           avatarUrl: 'https://example.com/test.jpg',
         }),
@@ -71,6 +72,7 @@ describe('Users API', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          idAlias: 'test-user',
           name: 'Test User',
           avatarUrl: 'https://example.com/avatar.jpg',
         }),
@@ -96,6 +98,7 @@ describe('Users API', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          idAlias: 'test-user-2',
           name: 'Test User 2',
         }),
       })
@@ -120,6 +123,7 @@ describe('Users API', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          idAlias: 'empty-name',
           name: '',
         }),
       })
@@ -138,6 +142,7 @@ describe('Users API', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          idAlias: 'test-user-prod',
           name: 'Test User',
         }),
       })
@@ -155,6 +160,7 @@ describe('Users API', () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          idAlias: 'findable-user',
           name: 'Findable User',
           avatarUrl: 'https://example.com/findable.jpg',
         }),
