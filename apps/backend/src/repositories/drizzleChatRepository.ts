@@ -137,11 +137,15 @@ export class DrizzleChatRepository implements ChatRepository {
       .from(participants)
       .innerJoin(users, eq(participants.userId, users.id))
       .where(eq(participants.conversationId, conversationRow.id))
-      .orderBy(participants.joinedAt, participants.userId)
 
-    const participantList = participantWithUserRows.map(row =>
-      mapParticipant(row.participants, row.users),
+    // Order participants by the original participantIds array order
+    const participantMap = new Map(
+      participantWithUserRows.map(row => [row.participants.userId, row])
     )
+    const participantList = data.participantIds
+      .map(userId => participantMap.get(userId))
+      .filter((row): row is NonNullable<typeof row> => row !== undefined)
+      .map(row => mapParticipant(row.participants, row.users))
 
     return mapConversation(conversationRow, participantList)
   }
@@ -160,7 +164,7 @@ export class DrizzleChatRepository implements ChatRepository {
       .from(participants)
       .innerJoin(users, eq(participants.userId, users.id))
       .where(eq(participants.conversationId, conversationId))
-      .orderBy(participants.joinedAt, participants.userId)
+      .orderBy(participants.id)
 
     const participantList = participantWithUserRows.map(row =>
       mapParticipant(row.participants, row.users),
@@ -188,7 +192,7 @@ export class DrizzleChatRepository implements ChatRepository {
       .from(participants)
       .innerJoin(users, eq(participants.userId, users.id))
       .where(inArray(participants.conversationId, conversationIds))
-      .orderBy(participants.joinedAt, participants.userId)
+      .orderBy(participants.id)
 
     const participantMap = participantWithUserRows.reduce<Map<string, Participant[]>>(
       (acc, row) => {
