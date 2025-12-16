@@ -5,10 +5,12 @@ import { expectMatchesSnapshot } from '../__tests__/helpers/snapshotHelpers'
 import { getUsersResponseItem, getUsersUserIdResponse } from 'openapi'
 import { db, closeDbConnection, sqlite } from '../infrastructure/db/client'
 import { users, conversations, participants, messages, reactions, conversationReads, messageBookmarks } from '../infrastructure/db/schema'
+import { setupTestDatabase } from '../__tests__/helpers/dbSetup'
 
 describe('Users API', () => {
-  beforeAll(() => {
+  beforeAll(async () => {
     process.env.NODE_ENV = 'development'
+    await setupTestDatabase()
   })
 
   beforeEach(async () => {

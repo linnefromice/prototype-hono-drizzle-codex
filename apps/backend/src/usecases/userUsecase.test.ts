@@ -82,6 +82,7 @@ describe('UserUsecase', () => {
   describe('getUserById', () => {
     it('returns user when found', async () => {
       const created = await usecase.createUser({
+        idAlias: 'johndoe-find',
         name: 'John Doe',
         avatarUrl: 'https://example.com/avatar.jpg',
       })

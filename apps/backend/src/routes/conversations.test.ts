@@ -14,10 +14,12 @@ import {
 } from 'openapi'
 import { db, closeDbConnection, sqlite } from '../infrastructure/db/client'
 import { users, conversations as conversationsTable, participants, messages, reactions, conversationReads, messageBookmarks } from '../infrastructure/db/schema'
+import { setupTestDatabase } from '../__tests__/helpers/dbSetup'
 
 describe('Conversations API', () => {
-  beforeAll(() => {
+  beforeAll(async () => {
     process.env.NODE_ENV = 'development'
+    await setupTestDatabase()
   })
 
   beforeEach(async () => {
