@@ -1,4 +1,4 @@
-import { describe, expect, it, beforeAll, afterAll, beforeEach } from 'vitest'
+import { describe, expect, it, beforeAll, afterAll, beforeEach, vi } from 'vitest'
 import { ZodError } from 'zod'
 import app from '../app'
 import { expectValidZodSchema, expectValidZodSchemaArray } from '../__tests__/helpers/zodValidation'
@@ -20,6 +20,9 @@ describe('Conversations API', () => {
   beforeAll(async () => {
     process.env.NODE_ENV = 'development'
     await setupTestDatabase()
+    // Use fake timers for deterministic timestamps
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2025-01-01T00:00:00.000Z'))
   })
 
   beforeEach(async () => {
@@ -34,6 +37,7 @@ describe('Conversations API', () => {
   })
 
   afterAll(async () => {
+    vi.useRealTimers()
     await closeDbConnection()
   })
 
