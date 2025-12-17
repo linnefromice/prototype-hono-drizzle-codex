@@ -617,11 +617,16 @@ components:
         createdAt:
           type: string
           format: date-time
+        reactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reaction'
       required:
         - id
         - conversationId
         - type
         - createdAt
+        - reactions
     Reaction:
       type: object
       properties:

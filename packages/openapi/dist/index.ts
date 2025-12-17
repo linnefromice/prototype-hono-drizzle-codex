@@ -214,6 +214,15 @@ export const getConversationsIdMessagesResponseItem = zod.object({
   replyToMessageId: zod.string().uuid().nullish(),
   systemEvent: zod.enum(["join", "leave"]).nullish(),
   createdAt: zod.string().datetime({}),
+  reactions: zod.array(
+    zod.object({
+      id: zod.string().uuid(),
+      messageId: zod.string().uuid(),
+      userId: zod.string().uuid(),
+      emoji: zod.string(),
+      createdAt: zod.string().datetime({}),
+    })
+  ),
 });
 export const getConversationsIdMessagesResponse = zod.array(
   getConversationsIdMessagesResponseItem
