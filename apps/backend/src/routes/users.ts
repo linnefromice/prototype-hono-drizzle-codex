@@ -8,8 +8,9 @@ import { UserUsecase } from '../usecases/userUsecase'
 import { HttpError } from '../utils/errors'
 import { devOnly } from '../middleware/devOnly'
 import { getDbClient } from '../utils/dbClient'
+import { getChatUserId } from '../utils/getChatUserId'
 import { requireAuth } from '../middleware/requireAuth'
-import type { Env } from '../index'
+import type { Env } from '../infrastructure/db/client.d1'
 import type { AuthVariables } from '../infrastructure/auth'
 
 const router = new Hono<{
@@ -98,13 +99,15 @@ router.get('/:id/bookmarks', requireAuth, async c => {
   const userId = c.req.param('id')
   const authUser = c.get('authUser')
 
-  // Only allow users to view their own bookmarks
-  if (userId !== authUser!.id) {
-    return c.json({ message: 'Forbidden: You can only view your own bookmarks' }, 403)
-  }
-
   try {
     const db = await getDbClient(c)
+    const chatUserId = await getChatUserId(db, authUser!)
+
+    // Only allow users to view their own bookmarks
+    if (userId !== chatUserId) {
+      return c.json({ message: 'Forbidden: You can only view your own bookmarks' }, 403)
+    }
+
     const chatUsecase = new ChatUsecase(new DrizzleChatRepository(db))
     const bookmarks = await chatUsecase.listBookmarks(userId)
     return c.json(bookmarks)

@@ -21,7 +21,18 @@ export const requireAuth = createMiddleware<{
   Bindings: Env
   Variables: AuthVariables
 }>(async (c, next) => {
-  const db = createD1Client(c.env.DB)
+  // In test/development mode, use the local BetterSQLite3 database
+  // In production, use Cloudflare D1
+  let db
+  if (process.env.NODE_ENV === 'test' || !c.env?.DB) {
+    // Use local BetterSQLite3 database for tests
+    const { db: localDb } = await import('../infrastructure/db/client')
+    db = localDb as any // Cast to satisfy TypeScript - BetterAuth works with both
+  } else {
+    // Use Cloudflare D1 in production
+    db = createD1Client(c.env.DB)
+  }
+
   const auth = createAuth(db)
 
   const session = await auth.api.getSession({
@@ -64,7 +75,18 @@ export const optionalAuth = createMiddleware<{
   Bindings: Env
   Variables: AuthVariables
 }>(async (c, next) => {
-  const db = createD1Client(c.env.DB)
+  // In test/development mode, use the local BetterSQLite3 database
+  // In production, use Cloudflare D1
+  let db
+  if (process.env.NODE_ENV === 'test' || !c.env?.DB) {
+    // Use local BetterSQLite3 database for tests
+    const { db: localDb } = await import('../infrastructure/db/client')
+    db = localDb as any // Cast to satisfy TypeScript - BetterAuth works with both
+  } else {
+    // Use Cloudflare D1 in production
+    db = createD1Client(c.env.DB)
+  }
+
   const auth = createAuth(db)
 
   const session = await auth.api.getSession({
