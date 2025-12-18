@@ -45,3 +45,4 @@ export * from "./updateConversationReadRequest";
 export * from "./updateConversationReadResponse";
 export * from "./updateConversationReadResponseStatus";
 export * from "./user";
+export * from "./deleteMessagesIdParams";

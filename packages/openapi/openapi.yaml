@@ -199,6 +199,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
+  /messages/{id}:
+    delete:
+      summary: Delete a message
+      description: Soft-delete a message. Only the sender or conversation admin can delete.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Message successfully deleted
+        '403':
+          description: Forbidden - user is not authorized to delete this message
+        '404':
+          description: Message not found
   /messages/{id}/reactions:
     get:
       summary: Get reactions for a message

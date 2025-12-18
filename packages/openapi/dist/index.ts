@@ -243,6 +243,18 @@ export const postConversationsIdMessagesBody = zod.object({
 });
 
 /**
+ * Soft-delete a message. Only the sender or conversation admin can delete.
+ * @summary Delete a message
+ */
+export const deleteMessagesIdParams = zod.object({
+  id: zod.string().uuid(),
+});
+
+export const deleteMessagesIdQueryParams = zod.object({
+  userId: zod.string().uuid(),
+});
+
+/**
  * @summary Get reactions for a message
  */
 export const getMessagesIdReactionsParams = zod.object({
