@@ -33,10 +33,6 @@ export const postItemsBody = zod.object({
 /**
  * @summary List conversations for a user
  */
-export const getConversationsQueryParams = zod.object({
-  userId: zod.string().uuid(),
-});
-
 export const getConversationsResponseParticipantsItemUserIdAliasMin = 3;
 export const getConversationsResponseParticipantsItemUserIdAliasMax = 30;
 export const getConversationsResponseParticipantsItemUserIdAliasRegExp =
@@ -196,7 +192,6 @@ export const getConversationsIdMessagesParams = zod.object({
 export const getConversationsIdMessagesQueryLimitMax = 100;
 
 export const getConversationsIdMessagesQueryParams = zod.object({
-  userId: zod.string().uuid(),
   limit: zod
     .number()
     .min(1)
@@ -250,10 +245,6 @@ export const deleteMessagesIdParams = zod.object({
   id: zod.string().uuid(),
 });
 
-export const deleteMessagesIdQueryParams = zod.object({
-  userId: zod.string().uuid(),
-});
-
 /**
  * @summary Get reactions for a message
  */
@@ -290,10 +281,6 @@ export const postMessagesIdReactionsBody = zod.object({
 export const deleteMessagesIdReactionsEmojiParams = zod.object({
   id: zod.string().uuid(),
   emoji: zod.string(),
-});
-
-export const deleteMessagesIdReactionsEmojiQueryParams = zod.object({
-  userId: zod.string().uuid(),
 });
 
 export const deleteMessagesIdReactionsEmojiResponse = zod.object({
@@ -334,10 +321,6 @@ export const getConversationsIdUnreadCountParams = zod.object({
   id: zod.string().uuid(),
 });
 
-export const getConversationsIdUnreadCountQueryParams = zod.object({
-  userId: zod.string().uuid(),
-});
-
 export const getConversationsIdUnreadCountResponseUnreadCountMin = 0;
 
 export const getConversationsIdUnreadCountResponse = zod.object({
@@ -362,10 +345,6 @@ export const postMessagesIdBookmarksBody = zod.object({
  */
 export const deleteMessagesIdBookmarksParams = zod.object({
   id: zod.string().uuid(),
-});
-
-export const deleteMessagesIdBookmarksQueryParams = zod.object({
-  userId: zod.string().uuid(),
 });
 
 export const deleteMessagesIdBookmarksResponse = zod.object({
@@ -691,9 +670,6 @@ export { postMessagesIdReactionsBody as ReactionRequestSchema };
 export { postConversationsIdReadBody as UpdateConversationReadRequestSchema };
 export { postMessagesIdBookmarksBody as BookmarkRequestSchema };
 export { postUsersBody as CreateUserRequestSchema };
-export { postApiAuthSignUpEmailBody as SignUpRequestSchema };
-export { postApiAuthSignInUsernameBody as SignInRequestSchema };
-export { putApiProtectedProfileNameBody as UpdateProfileNameRequestSchema };
 
 // Re-export TypeScript types for use in repositories and usecases
 export type HealthResponse = zod.infer<typeof getHealthResponse>;
@@ -718,15 +694,3 @@ export type SendMessageRequest = zod.infer<typeof postConversationsIdMessagesBod
 export type ReactionRequest = zod.infer<typeof postMessagesIdReactionsBody>;
 export type UpdateConversationReadRequest = zod.infer<typeof postConversationsIdReadBody>;
 export type BookmarkRequest = zod.infer<typeof postMessagesIdBookmarksBody>;
-
-// Authentication types
-export type SignUpRequest = zod.infer<typeof postApiAuthSignUpEmailBody>;
-export type SignInRequest = zod.infer<typeof postApiAuthSignInUsernameBody>;
-export type AuthUser = zod.infer<typeof postApiAuthSignUpEmailResponse>['user'];
-export type AuthResponse = zod.infer<typeof postApiAuthSignUpEmailResponse>;
-export type SessionResponse = Extract<zod.infer<typeof getApiAuthGetSessionResponse>, { session: any }>;
-export type AuthUserInfo = zod.infer<typeof getApiProtectedMeResponse>;
-export type UserProfile = zod.infer<typeof getApiProtectedProfileResponse>;
-export type UpdateProfileNameRequest = zod.infer<typeof putApiProtectedProfileNameBody>;
-export type UpdateProfileNameResponse = zod.infer<typeof putApiProtectedProfileNameResponse>;
-export type PublicResponse = zod.infer<typeof getApiProtectedPublicResponse>;

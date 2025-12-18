@@ -45,13 +45,8 @@ paths:
   /conversations:
     get:
       summary: List conversations for a user
-      parameters:
-        - name: userId
-          in: query
-          required: true
-          schema:
-            type: string
-            format: uuid
+      security:
+        - cookieAuth: []
       responses:
         '200':
           description: Conversations for the given user
@@ -63,6 +58,8 @@ paths:
                   $ref: '#/components/schemas/ConversationDetail'
     post:
       summary: Create a conversation
+      security:
+        - cookieAuth: []
       requestBody:
         required: true
         content:
@@ -79,6 +76,8 @@ paths:
   /conversations/{id}:
     get:
       summary: Get a conversation detail
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
@@ -96,6 +95,8 @@ paths:
   /conversations/{id}/participants:
     post:
       summary: Add a participant to a conversation
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
@@ -119,6 +120,8 @@ paths:
   /conversations/{id}/participants/{userId}:
     delete:
       summary: Remove participant from conversation
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
@@ -142,15 +145,11 @@ paths:
   /conversations/{id}/messages:
     get:
       summary: List messages in a conversation
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: userId
-          in: query
           required: true
           schema:
             type: string
@@ -179,6 +178,8 @@ paths:
                   $ref: '#/components/schemas/Message'
     post:
       summary: Send message to a conversation
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
@@ -203,15 +204,11 @@ paths:
     delete:
       summary: Delete a message
       description: Soft-delete a message. Only the sender or conversation admin can delete.
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: userId
-          in: query
           required: true
           schema:
             type: string
@@ -226,6 +223,8 @@ paths:
   /messages/{id}/reactions:
     get:
       summary: Get reactions for a message
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
@@ -246,6 +245,8 @@ paths:
           description: Message not found
     post:
       summary: Add reaction to message
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
@@ -269,6 +270,8 @@ paths:
   /messages/{id}/reactions/{emoji}:
     delete:
       summary: Remove reaction from message
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
@@ -281,12 +284,6 @@ paths:
           required: true
           schema:
             type: string
-        - name: userId
-          in: query
-          required: true
-          schema:
-            type: string
-            format: uuid
       responses:
         '200':
           description: Reaction removed
@@ -297,6 +294,8 @@ paths:
   /conversations/{id}/read:
     post:
       summary: Update last read message in a conversation
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
@@ -320,15 +319,11 @@ paths:
   /conversations/{id}/unread-count:
     get:
       summary: Get unread count for a conversation
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: userId
-          in: query
           required: true
           schema:
             type: string
@@ -343,6 +338,8 @@ paths:
   /messages/{id}/bookmarks:
     post:
       summary: Bookmark a message
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
@@ -365,15 +362,11 @@ paths:
                 $ref: '#/components/schemas/BookmarkResponse'
     delete:
       summary: Remove bookmark from a message
+      security:
+        - cookieAuth: []
       parameters:
         - name: id
           in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: userId
-          in: query
           required: true
           schema:
             type: string
@@ -440,6 +433,8 @@ paths:
   /users/{userId}/bookmarks:
     get:
       summary: List bookmarks for a user
+      security:
+        - cookieAuth: []
       parameters:
         - name: userId
           in: path

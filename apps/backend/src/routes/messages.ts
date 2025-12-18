@@ -4,8 +4,14 @@ import { DrizzleChatRepository } from '../repositories/drizzleChatRepository'
 import { ChatUsecase } from '../usecases/chatUsecase'
 import { HttpError } from '../utils/errors'
 import { getDbClient } from '../utils/dbClient'
+import { requireAuth } from '../middleware/requireAuth'
+import type { Env } from '../index'
+import type { AuthVariables } from '../infrastructure/auth'
 
-const router = new Hono()
+const router = new Hono<{
+  Bindings: Env
+  Variables: AuthVariables
+}>()
 
 const handleError = (error: unknown, c: any) => {
   if (error instanceof HttpError) {
@@ -20,13 +26,10 @@ const handleError = (error: unknown, c: any) => {
   return c.json({ message }, 500)
 }
 
-router.delete('/:id', async c => {
+router.delete('/:id', requireAuth, async c => {
   const messageId = c.req.param('id')
-  const userId = c.req.query('userId')
-
-  if (!userId) {
-    return c.json({ message: 'userId is required' }, 400)
-  }
+  const authUser = c.get('authUser')
+  const userId = authUser!.id
 
   try {
     const db = await getDbClient(c)
@@ -38,7 +41,7 @@ router.delete('/:id', async c => {
   }
 })
 
-router.get('/:id/reactions', async c => {
+router.get('/:id/reactions', requireAuth, async c => {
   const messageId = c.req.param('id')
 
   try {
@@ -51,9 +54,16 @@ router.get('/:id/reactions', async c => {
   }
 })
 
-router.post('/:id/reactions', async c => {
+router.post('/:id/reactions', requireAuth, async c => {
   const messageId = c.req.param('id')
-  const payload = ReactionRequestSchema.parse(await c.req.json())
+  const authUser = c.get('authUser')
+  const body = await c.req.json()
+
+  // Override userId with authenticated user's ID
+  const payload = ReactionRequestSchema.parse({
+    ...body,
+    userId: authUser!.id
+  })
 
   try {
     const db = await getDbClient(c)
@@ -65,14 +75,11 @@ router.post('/:id/reactions', async c => {
   }
 })
 
-router.delete('/:id/reactions/:emoji', async c => {
+router.delete('/:id/reactions/:emoji', requireAuth, async c => {
   const messageId = c.req.param('id')
   const emoji = c.req.param('emoji')
-  const userId = c.req.query('userId')
-
-  if (!userId) {
-    return c.json({ message: 'userId is required' }, 400)
-  }
+  const authUser = c.get('authUser')
+  const userId = authUser!.id
 
   try {
     const db = await getDbClient(c)
@@ -84,9 +91,16 @@ router.delete('/:id/reactions/:emoji', async c => {
   }
 })
 
-router.post('/:id/bookmarks', async c => {
+router.post('/:id/bookmarks', requireAuth, async c => {
   const messageId = c.req.param('id')
-  const payload = BookmarkRequestSchema.parse(await c.req.json())
+  const authUser = c.get('authUser')
+  const body = await c.req.json()
+
+  // Override userId with authenticated user's ID
+  const payload = BookmarkRequestSchema.parse({
+    ...body,
+    userId: authUser!.id
+  })
 
   try {
     const db = await getDbClient(c)
@@ -98,13 +112,10 @@ router.post('/:id/bookmarks', async c => {
   }
 })
 
-router.delete('/:id/bookmarks', async c => {
+router.delete('/:id/bookmarks', requireAuth, async c => {
   const messageId = c.req.param('id')
-  const userId = c.req.query('userId')
-
-  if (!userId) {
-    return c.json({ message: 'userId is required' }, 400)
-  }
+  const authUser = c.get('authUser')
+  const userId = authUser!.id
 
   try {
     const db = await getDbClient(c)

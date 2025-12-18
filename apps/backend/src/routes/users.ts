@@ -8,8 +8,14 @@ import { UserUsecase } from '../usecases/userUsecase'
 import { HttpError } from '../utils/errors'
 import { devOnly } from '../middleware/devOnly'
 import { getDbClient } from '../utils/dbClient'
+import { requireAuth } from '../middleware/requireAuth'
+import type { Env } from '../index'
+import type { AuthVariables } from '../infrastructure/auth'
 
-const router = new Hono()
+const router = new Hono<{
+  Bindings: Env
+  Variables: AuthVariables
+}>()
 
 const handleError = (error: unknown, c: any) => {
   if (error instanceof HttpError) {
@@ -88,8 +94,14 @@ router.get('/:id', async c => {
   }
 })
 
-router.get('/:id/bookmarks', async c => {
+router.get('/:id/bookmarks', requireAuth, async c => {
   const userId = c.req.param('id')
+  const authUser = c.get('authUser')
+
+  // Only allow users to view their own bookmarks
+  if (userId !== authUser!.id) {
+    return c.json({ message: 'Forbidden: You can only view your own bookmarks' }, 403)
+  }
 
   try {
     const db = await getDbClient(c)
