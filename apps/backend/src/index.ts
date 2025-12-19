@@ -7,6 +7,7 @@ import conversationsRouter from './routes/conversations'
 import messagesRouter from './routes/messages'
 import usersRouter from './routes/users'
 import authExampleRouter from './routes/auth-example'
+import adminRouter from './routes/admin'
 
 // Cloudflare Workers entry point with D1 bindings
 const app = new Hono<{ Bindings: Env }>()
@@ -37,6 +38,9 @@ app.route('/health', healthRouter)
 app.route('/conversations', conversationsRouter)
 app.route('/messages', messagesRouter)
 app.route('/users', usersRouter)
+
+// Admin routes
+app.route('/admin', adminRouter)
 
 // Protected routes examples (demonstrating authentication middleware)
 app.route('/api/protected', authExampleRouter)
