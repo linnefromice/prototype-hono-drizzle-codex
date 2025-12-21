@@ -5,6 +5,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
+/**
+ * Add a bookmark to a message. The userId is automatically determined from the authenticated session. No request body is required.
+ */
 export interface BookmarkRequest {
-  userId: string;
+  [key: string]: unknown;
 }

@@ -5,7 +5,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
+/**
+ * Add a reaction to a message. The userId is automatically determined from the authenticated session.
+ */
 export interface ReactionRequest {
-  userId: string;
   emoji: string;
 }

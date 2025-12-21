@@ -230,12 +230,14 @@ export const postConversationsIdMessagesParams = zod.object({
   id: zod.string().uuid(),
 });
 
-export const postConversationsIdMessagesBody = zod.object({
-  senderUserId: zod.string().uuid().nullable(),
-  text: zod.string().nullish(),
-  replyToMessageId: zod.string().uuid().nullish(),
-  systemEvent: zod.enum(["join", "leave"]).nullish(),
-});
+export const postConversationsIdMessagesBody = zod
+  .object({
+    text: zod.string().nullish(),
+    replyToMessageId: zod.string().uuid().nullish(),
+  })
+  .describe(
+    "Send a message to a conversation. The senderUserId is automatically determined from the authenticated session. At least 'text' should be provided for normal messages."
+  );
 
 /**
  * Soft-delete a message. Only the sender or conversation admin can delete.
@@ -270,10 +272,13 @@ export const postMessagesIdReactionsParams = zod.object({
   id: zod.string().uuid(),
 });
 
-export const postMessagesIdReactionsBody = zod.object({
-  userId: zod.string().uuid(),
-  emoji: zod.string(),
-});
+export const postMessagesIdReactionsBody = zod
+  .object({
+    emoji: zod.string(),
+  })
+  .describe(
+    "Add a reaction to a message. The userId is automatically determined from the authenticated session."
+  );
 
 /**
  * @summary Remove reaction from message
@@ -298,10 +303,13 @@ export const postConversationsIdReadParams = zod.object({
   id: zod.string().uuid(),
 });
 
-export const postConversationsIdReadBody = zod.object({
-  userId: zod.string().uuid(),
-  lastReadMessageId: zod.string().uuid(),
-});
+export const postConversationsIdReadBody = zod
+  .object({
+    lastReadMessageId: zod.string().uuid(),
+  })
+  .describe(
+    "Mark conversation as read up to a specific message. The userId is automatically determined from the authenticated session."
+  );
 
 export const postConversationsIdReadResponse = zod.object({
   status: zod.enum(["ok"]),
@@ -336,9 +344,11 @@ export const postMessagesIdBookmarksParams = zod.object({
   id: zod.string().uuid(),
 });
 
-export const postMessagesIdBookmarksBody = zod.object({
-  userId: zod.string().uuid(),
-});
+export const postMessagesIdBookmarksBody = zod
+  .object({})
+  .describe(
+    "Add a bookmark to a message. The userId is automatically determined from the authenticated session. No request body is required."
+  );
 
 /**
  * @summary Remove bookmark from a message

@@ -4,15 +4,13 @@
  * Prototype Hono Drizzle API
  * OpenAPI spec version: 0.1.0
  */
-import type { SendMessageRequestSystemEvent } from "./sendMessageRequestSystemEvent";
 
+/**
+ * Send a message to a conversation. The senderUserId is automatically determined from the authenticated session. At least 'text' should be provided for normal messages.
+ */
 export interface SendMessageRequest {
-  /** @nullable */
-  senderUserId: string | null;
   /** @nullable */
   text?: string | null;
   /** @nullable */
   replyToMessageId?: string | null;
-  /** @nullable */
-  systemEvent?: SendMessageRequestSystemEvent;
 }

@@ -5,7 +5,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
+/**
+ * Mark conversation as read up to a specific message. The userId is automatically determined from the authenticated session.
+ */
 export interface UpdateConversationReadRequest {
-  userId: string;
   lastReadMessageId: string;
 }

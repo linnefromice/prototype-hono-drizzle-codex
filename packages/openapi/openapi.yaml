@@ -877,10 +877,6 @@ components:
     SendMessageRequest:
       type: object
       properties:
-        senderUserId:
-          type: string
-          format: uuid
-          nullable: true
         text:
           type: string
           nullable: true
@@ -888,35 +884,24 @@ components:
           type: string
           format: uuid
           nullable: true
-        systemEvent:
-          type: string
-          enum: [join, leave]
-          nullable: true
-      required:
-        - senderUserId
+      description: Send a message to a conversation. The senderUserId is automatically determined from the authenticated session. At least 'text' should be provided for normal messages.
     ReactionRequest:
       type: object
       properties:
-        userId:
-          type: string
-          format: uuid
         emoji:
           type: string
       required:
-        - userId
         - emoji
+      description: Add a reaction to a message. The userId is automatically determined from the authenticated session.
     UpdateConversationReadRequest:
       type: object
       properties:
-        userId:
-          type: string
-          format: uuid
         lastReadMessageId:
           type: string
           format: uuid
       required:
-        - userId
         - lastReadMessageId
+      description: Mark conversation as read up to a specific message. The userId is automatically determined from the authenticated session.
     ConversationRead:
       type: object
       properties:
@@ -982,12 +967,8 @@ components:
         - createdAt
     BookmarkRequest:
       type: object
-      properties:
-        userId:
-          type: string
-          format: uuid
-      required:
-        - userId
+      properties: {}
+      description: Add a bookmark to a message. The userId is automatically determined from the authenticated session. No request body is required.
     BookmarkResponse:
       type: object
       properties:
