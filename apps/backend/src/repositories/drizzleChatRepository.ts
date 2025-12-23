@@ -290,7 +290,9 @@ export class DrizzleChatRepository implements ChatRepository {
 
   async listMessages(conversationId: string, options: MessageQueryOptions = {}): Promise<Message[]> {
     const { before, limit = 50 } = options
+    const REACTION_LIMIT_PER_MESSAGE = 100
 
+    // 1. Fetch messages
     const messageRows = await this.client
       .select()
       .from(messages)
@@ -306,22 +308,40 @@ export class DrizzleChatRepository implements ChatRepository {
       .orderBy(desc(messages.createdAt))
       .limit(limit)
 
-    // Fetch reactions for each message
-    const messagesWithReactions = await Promise.all(
-      messageRows.map(async (msgRow) => {
-        const reactionRows = await this.client
-          .select()
-          .from(reactions)
-          .where(eq(reactions.messageId, msgRow.id))
+    if (messageRows.length === 0) {
+      return []
+    }
 
-        return {
-          ...mapMessage(msgRow),
-          reactions: reactionRows.map(mapReaction),
-        }
-      })
-    )
+    // 2. Fetch all reactions for these messages in a single query (fixes N+1)
+    const messageIds = messageRows.map(m => m.id)
+    let allReactions: Array<typeof reactions.$inferSelect> = []
 
-    return messagesWithReactions
+    try {
+      allReactions = await this.client
+        .select()
+        .from(reactions)
+        .where(inArray(reactions.messageId, messageIds))
+        .orderBy(desc(reactions.createdAt))
+    } catch (error) {
+      // If reactions fetch fails, still return messages without reactions
+      console.error('Failed to fetch reactions:', error)
+    }
+
+    // 3. Group reactions by messageId with limit per message
+    const reactionsByMessageId = new Map<string, Array<typeof reactions.$inferSelect>>()
+    for (const reaction of allReactions) {
+      const existing = reactionsByMessageId.get(reaction.messageId) || []
+      if (existing.length < REACTION_LIMIT_PER_MESSAGE) {
+        existing.push(reaction)
+        reactionsByMessageId.set(reaction.messageId, existing)
+      }
+    }
+
+    // 4. Combine messages with their reactions
+    return messageRows.map(msgRow => ({
+      ...mapMessage(msgRow),
+      reactions: (reactionsByMessageId.get(msgRow.id) || []).map(mapReaction),
+    }))
   }
 
   async findMessageById(messageId: string): Promise<Message | null> {
