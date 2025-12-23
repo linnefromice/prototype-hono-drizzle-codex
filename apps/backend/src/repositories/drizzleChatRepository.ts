@@ -31,34 +31,38 @@ import type { ChatRepository, MessageQueryOptions } from './chatRepository'
 const mapParticipant = (
   participantRow: typeof participants.$inferSelect,
   userRow: typeof users.$inferSelect,
-): Participant => ({
-  id: participantRow.id,
-  conversationId: participantRow.conversationId,
-  userId: participantRow.userId,
-  role: participantRow.role,
-  // SQLite stores dates as ISO 8601 strings
-  joinedAt: participantRow.joinedAt,
-  leftAt: participantRow.leftAt ?? undefined,
-  user: {
-    id: userRow.id,
-    idAlias: userRow.idAlias,
-    name: userRow.name,
-    avatarUrl: userRow.avatarUrl ?? undefined,
-    createdAt: userRow.createdAt,
-  },
-})
+): Participant => {
+  return {
+    id: participantRow.id,
+    conversationId: participantRow.conversationId,
+    userId: participantRow.userId,
+    role: participantRow.role as Participant['role'],
+    // SQLite stores dates as ISO 8601 strings
+    joinedAt: participantRow.joinedAt,
+    leftAt: participantRow.leftAt ?? undefined,
+    user: {
+      id: userRow.id,
+      idAlias: userRow.idAlias,
+      name: userRow.name,
+      avatarUrl: userRow.avatarUrl ?? undefined,
+      createdAt: userRow.createdAt,
+    },
+  } as Participant
+}
 
 const mapConversation = (
   row: typeof conversations.$inferSelect,
-  participantList: Participant[] = [],
-): ConversationDetail => ({
-  id: row.id,
-  type: row.type,
-  name: row.name ?? undefined,
-  // SQLite stores dates as ISO 8601 strings
-  createdAt: row.createdAt,
-  participants: participantList,
-})
+  participantList?: Participant[],
+): ConversationDetail => {
+  return {
+    id: row.id,
+    type: row.type,
+    name: row.name ?? undefined,
+    // SQLite stores dates as ISO 8601 strings
+    createdAt: row.createdAt,
+    participants: participantList ?? [],
+  } as ConversationDetail
+}
 
 const mapMessage = (row: typeof messages.$inferSelect): Omit<Message, 'reactions'> => ({
   id: row.id,
@@ -127,7 +131,7 @@ export class DrizzleChatRepository implements ChatRepository {
     }))
 
     if (!participantsPayload.length) {
-      return mapConversation(conversationRow, [])
+      return mapConversation(conversationRow)
     }
 
     await this.client.insert(participants).values(participantsPayload)
