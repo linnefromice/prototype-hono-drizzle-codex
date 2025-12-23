@@ -15,8 +15,8 @@ export async function getChatUserId(
   db: DbClient,
   authUser: User
 ): Promise<string> {
-  // Cast to any to work with both D1 and SQLite databases
-  const results = await (db as any)
+  // DbClient type works with both D1 and SQLite databases
+  const results = await db
     .select({ id: chatUsers.id })
     .from(chatUsers)
     .where(eq(chatUsers.authUserId, authUser.id))

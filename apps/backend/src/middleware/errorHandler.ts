@@ -1,4 +1,5 @@
 import type { Context } from 'hono'
+import type { StatusCode } from 'hono/utils/http-status'
 import { ZodError } from 'zod'
 import type { ErrorResponse, ValidationErrorResponse } from '../types/errors'
 import { HttpError } from '../utils/errors'
@@ -15,7 +16,9 @@ export const errorHandler = (err: Error, c: Context) => {
     const response: ErrorResponse = {
       message: err.message,
     }
-    return c.json(response, err.status as any)
+    // Use StatusCode type assertion for type safety
+    // This is safer than 'as any' and ensures the status code is valid
+    return c.json(response, err.status as StatusCode)
   }
 
   // Handle Zod validation errors
@@ -28,7 +31,7 @@ export const errorHandler = (err: Error, c: Context) => {
         message: e.message,
       })),
     }
-    return c.json(response, 400 as any)
+    return c.json(response, 400)
   }
 
   // Log unexpected errors
@@ -39,5 +42,5 @@ export const errorHandler = (err: Error, c: Context) => {
     message: err instanceof Error ? err.message : 'Internal Server Error',
     code: 'INTERNAL_ERROR',
   }
-  return c.json(response, 500 as any)
+  return c.json(response, 500)
 }
