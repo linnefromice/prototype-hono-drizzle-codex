@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import type { Env } from './infrastructure/db/client.d1'
 import { createD1Client } from './infrastructure/db/client.d1'
 import { createAuth } from './infrastructure/auth'
+import { errorHandler } from './middleware/errorHandler'
 import healthRouter from './routes/health'
 import conversationsRouter from './routes/conversations'
 import messagesRouter from './routes/messages'
@@ -12,6 +13,9 @@ import adminRouter from './routes/admin'
 
 // Cloudflare Workers entry point with D1 bindings
 const app = new Hono<{ Bindings: Env }>()
+
+// Global error handler
+app.onError(errorHandler)
 
 // Better Auth authentication handler
 // Automatically handles: /api/auth/sign-up/username, /api/auth/sign-in/username, /api/auth/sign-out, etc.
