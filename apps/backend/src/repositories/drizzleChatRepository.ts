@@ -26,7 +26,8 @@ import {
   reactions,
   users,
 } from '../infrastructure/db/schema'
-import type { ChatRepository, MessageQueryOptions } from './chatRepository'
+import type { ChatRepository, MessageQueryOptions} from './chatRepository'
+import { logger } from '../utils/logger'
 
 const mapParticipant = (
   participantRow: typeof participants.$inferSelect,
@@ -328,7 +329,7 @@ export class DrizzleChatRepository implements ChatRepository {
         .orderBy(desc(reactions.createdAt))
     } catch (error) {
       // If reactions fetch fails, still return messages without reactions
-      console.error('Failed to fetch reactions:', error)
+      logger.error('Failed to fetch reactions', error)
     }
 
     // 3. Group reactions by messageId with limit per message

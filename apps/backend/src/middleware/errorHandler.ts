@@ -2,6 +2,7 @@ import type { Context } from 'hono'
 import { ZodError } from 'zod'
 import type { ErrorResponse, ValidationErrorResponse } from '../types/errors'
 import { HttpError } from '../utils/errors'
+import { logger } from '../utils/logger'
 
 /**
  * Global error handler for the application
@@ -31,7 +32,7 @@ export const errorHandler = (err: Error, c: Context) => {
   }
 
   // Log unexpected errors
-  console.error('Unhandled error:', err)
+  logger.error('Unhandled error', err)
 
   // Return a generic error response for unknown errors
   const response: ErrorResponse = {

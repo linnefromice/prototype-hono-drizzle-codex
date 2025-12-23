@@ -3,6 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle"
 import { username } from "better-auth/plugins"
 import type { DrizzleD1Database } from 'drizzle-orm/d1'
 import * as schema from '../db/schema'
+import { logger } from '../../utils/logger'
 
 /**
  * Create Better Auth instance with username authentication
@@ -26,7 +27,7 @@ export const createAuth = (db: DrizzleD1Database<typeof schema>, secret?: string
   const isSecureContext = baseURL.startsWith('https://')
 
   // Debug log (can be removed later)
-  console.log('[Better Auth Config]', {
+  logger.debug('Better Auth Config', {
     baseURL,
     isSecureContext,
     useSecureCookies: isSecureContext,
